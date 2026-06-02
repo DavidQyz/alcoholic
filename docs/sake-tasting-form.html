@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>清酒品评记录</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans', 'Microsoft YaHei', sans-serif;
+  background: #f2f2ed;
+  padding: 24px 16px 48px;
+  color: #1a1a1a;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+h1 {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+  letter-spacing: 0.04em;
+}
+
+/* ── Cards ── */
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 18px 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #999;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+/* ── Field rows (for 基本信息) ── */
+.field {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  border-bottom: 1px solid #f3f3f3;
+  padding: 6px 0;
+  gap: 8px;
+}
+.field:last-child { border-bottom: none; }
+
+.field-label {
+  font-size: 14px;
+  color: #1a1a1a;
+  min-width: 68px;
+  flex-shrink: 0;
+}
+
+.field-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #1a1a1a;
+  background: transparent;
+  text-align: right;
+  font-family: inherit;
+}
+.field-input::placeholder { color: #ccc; }
+
+.field-number {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  justify-content: flex-end;
+  flex: 1;
+}
+.field-number input {
+  width: 56px;
+  text-align: right;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: inherit;
+  background: transparent;
+  color: #1a1a1a;
+}
+.field-number input::placeholder { color: #ccc; }
+.field-number span { color: #aaa; font-size: 13px; }
+
+input[type="date"] {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: inherit;
+  color: #1a1a1a;
+  background: transparent;
+  text-align: right;
+  cursor: pointer;
+}
+
+/* ── Chips ── */
+.chips-wrap {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 4px;
+}
+
+.chip {
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 1px solid #e3e3e3;
+  font-size: 13px;
+  cursor: pointer;
+  color: #555;
+  background: white;
+  transition: border-color 0.12s, background 0.12s, color 0.12s;
+  user-select: none;
+  white-space: nowrap;
+}
+.chip:hover { border-color: #b0b0b0; color: #333; }
+
+.chip.on {
+  background: #e6f4ee;
+  border-color: #3daa75;
+  color: #1e6e48;
+  font-weight: 500;
+}
+
+.chip .jp {
+  font-size: 10px;
+  opacity: 0.55;
+  display: block;
+  text-align: center;
+  margin-top: 1px;
+}
+
+/* ── Section field groups ── */
+.fgroup {
+  margin-bottom: 18px;
+}
+.fgroup:last-child { margin-bottom: 0; }
+
+.fgroup-label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.sub-label {
+  font-size: 11px;
+  color: #bbb;
+  margin: 10px 0 6px;
+}
+.sub-label:first-child { margin-top: 0; }
+
+/* ── Textareas ── */
+textarea {
+  width: 100%;
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 70px;
+  outline: none;
+  color: #1a1a1a;
+  background: #fafafa;
+  margin-top: 4px;
+  line-height: 1.6;
+}
+textarea:focus { border-color: #3daa75; background: white; }
+textarea::placeholder { color: #ccc; }
+
+/* ── SSI 2×2 grid ── */
+.ssi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.ssi-chip {
+  padding: 12px 8px;
+  border-radius: 14px;
+  border: 1px solid #e3e3e3;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.12s;
+  user-select: none;
+  background: white;
+}
+.ssi-chip:hover { border-color: #b0b0b0; }
+.ssi-chip.on {
+  background: #e6f4ee;
+  border-color: #3daa75;
+}
+
+.ssi-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.ssi-chip.on .ssi-name { color: #1e6e48; }
+
+.ssi-desc {
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 3px;
+}
+.ssi-chip.on .ssi-desc { color: #3daa75; }
+
+.ssi-jp {
+  font-size: 10px;
+  color: #ccc;
+  margin-top: 2px;
+}
+
+/* ── Rating chips ── */
+.rating-chip {
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 1px solid #e3e3e3;
+  font-size: 14px;
+  cursor: pointer;
+  color: #555;
+  background: white;
+  transition: all 0.12s;
+  user-select: none;
+}
+.rating-chip.on {
+  background: #e6f4ee;
+  border-color: #3daa75;
+  color: #1e6e48;
+  font-weight: 600;
+}
+
+/* ── Actions ── */
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.btn {
+  flex: 1;
+  padding: 13px;
+  border-radius: 13px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.12s;
+}
+.btn:hover { opacity: 0.88; }
+.btn-primary { background: #3daa75; color: white; }
+.btn-secondary { background: #ebebeb; color: #555; }
+
+/* ── Modal ── */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 200;
+  padding: 24px 16px;
+  align-items: flex-end;
+  justify-content: center;
+}
+.modal-backdrop.show { display: flex; }
+
+.modal-box {
+  background: white;
+  border-radius: 20px;
+  padding: 20px 18px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1a1a1a;
+}
+
+.modal-box pre {
+  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 12px;
+  background: #f5f5f2;
+  padding: 12px;
+  border-radius: 10px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 380px;
+  overflow-y: auto;
+  margin-bottom: 14px;
+  color: #333;
+  line-height: 1.55;
+}
+
+.modal-actions { display: flex; gap: 8px; }
+</style>
+</head>
+<body>
+
+<h1>清酒品评记录</h1>
+
+<!-- 基本信息 ────────────────────────────────── -->
+<div class="card">
+  <div class="section-title">基本信息</div>
+
+  <div class="field">
+    <span class="field-label">酒款名</span>
+    <input class="field-input" id="f-name" type="text" placeholder="—">
+  </div>
+  <div class="field">
+    <span class="field-label">蔵元</span>
+    <input class="field-input" id="f-brewery" type="text" placeholder="—">
+  </div>
+  <div class="field">
+    <span class="field-label">产地</span>
+    <input class="field-input" id="f-origin" type="text" placeholder="—">
+  </div>
+
+  <div class="field">
+    <span class="field-label">特定名称</span>
+    <div class="chips-wrap" id="c-grade"></div>
+  </div>
+
+  <div class="field">
+    <span class="field-label">精米步合</span>
+    <div class="field-number">
+      <input type="number" id="f-seimaibuai" placeholder="—" min="1" max="100">
+      <span>%</span>
+    </div>
+  </div>
+
+  <div class="field">
+    <span class="field-label">酒精度</span>
+    <div class="field-number">
+      <input type="number" id="f-alc" placeholder="—" min="1" max="30" step="0.1">
+      <span>%</span>
+    </div>
+  </div>
+
+  <div class="field">
+    <span class="field-label">酒米</span>
+    <input class="field-input" id="f-rice" type="text" placeholder="山田錦 / 雄町 / …">
+  </div>
+
+  <div class="field">
+    <span class="field-label">酒母</span>
+    <div class="chips-wrap" id="c-yeast"></div>
+  </div>
+
+  <div class="field">
+    <span class="field-label">其他特征</span>
+    <div class="chips-wrap" id="c-features"></div>
+  </div>
+
+  <div class="field">
+    <span class="field-label">品饮日期</span>
+    <input type="date" id="f-date">
+  </div>
+
+  <div class="field">
+    <span class="field-label">品饮场所</span>
+    <input class="field-input" id="f-venue" type="text" placeholder="—">
+  </div>
+
+  <div class="field">
+    <span class="field-label">品饮温度</span>
+    <div class="chips-wrap" id="c-temp"></div>
+  </div>
+</div>
+
+<!-- 外观 ────────────────────────────────────── -->
+<div class="card">
+  <div class="section-title">外观</div>
+
+  <div class="fgroup">
+    <div class="fgroup-label">清澄度</div>
+    <div class="chips-row" id="c-clarity"></div>
+  </div>
+
+  <div class="fgroup">
+    <div class="fgroup-label">色调</div>
+    <div class="chips-row" id="c-color"></div>
+  </div>
+
+  <div class="fgroup">
+    <div class="fgroup-label">备注</div>
+    <textarea id="f-appearance-note" placeholder="（可选）" style="min-height:48px"></textarea>
+  </div>
+</div>
+
+<!-- 香气 ────────────────────────────────────── -->
+<div class="card">
+  <div class="section-title">香气</div>
+
+  <div class="fgroup">
+    <div class="fgroup-label">第一印象（选一）</div>
+    <div class="chips-row" id="c-aroma-imp"></div>
+  </div>
+
+  <div class="fgroup">
+    <div class="fgroup-label">香气特征（选 5～11 项）</div>
+    <div class="sub-label">果实系</div>
+    <div class="chips-row" id="c-ar-fruit"></div>
+    <div class="sub-label">花 · 植物系</div>
+    <div class="chips-row" id="c-ar-floral"></div>
+    <div class="sub-label">米 · 穀物 · 乳系</div>
+    <div class="chips-row" id="c-ar-grain"></div>
+    <div class="sub-label">木 · 辛香系</div>
+    <div class="chips-row" id="c-ar-wood"></div>
+    <div class="sub-label">熟成 · その他</div>
+    <div class="chips-row" id="c-ar-aged"></div>
+  </div>
+
+  <div class="fgroup">
+    <div class="fgroup-label">自己的描述</div>
+    <textarea id="f-aroma-note" placeholder="用自己的语言描述香气印象…"></textarea>
+  </div>
+</div>
+
+<!-- 味道 ────────────────────────────────────── -->
+<div class="card">
+  <div class="section-title">味道</div>
+
+  <div class="fgroup">
+    <div class="fgroup-label">重量感</div>
+    <div class="chips-row" id="c-body"></div>
+  </div>
+  <div class="fgroup">
+    <div class="fgroup-label">甜感（甘み）</div>
+    <div class="chips-row" id="c-sweet"></div>
+  </div>
+  <div class="fgroup">
+    <div class="fgroup-label">酸感（酸み）</div>
+    <div class="chips-row" id="c-acid"></div>
+  </div>
+  <div class="fgroup">
+    <div class="fgroup-label">苦感（苦み）</div>
+    <div class="chips-row" id="c-bitter"></div>
+  </div>
+  <div class="fgroup">
+    <div class="fgroup-label">平衡感（バランス）</div>
+    <div class="chips-row" id="c-balance"></div>
+  </div>
+  <div class="fgroup">
+    <div class="fgroup-label">余韵长度</div>
+    <div class="chips-row" id="c-finish"></div>
+  </div>
+  <div class="fgroup">
+    <div class="fgroup-label">余韵特征</div>
+    <textarea id="f-finish-note" placeholder="余韵留下什么感受…" style="min-height:56px"></textarea>
+  </div>
+</div>
+
+<!-- 综合判断 ─────────────────────────────────── -->
+<div class="card">
+  <div class="section-title">综合判断</div>
+
+  <div class="fgroup">
+    <div class="fgroup-label">SSI 风格类型</div>
+    <div class="ssi-grid" id="c-ssi">
+      <div class="ssi-chip" data-v="薫酒">
+        <div class="ssi-name">薫酒</div>
+        <div class="ssi-desc">高香 · 淡味</div>
+        <div class="ssi-jp">くんしゅ</div>
+      </div>
+      <div class="ssi-chip" data-v="爽酒">
+        <div class="ssi-name">爽酒</div>
+        <div class="ssi-desc">低香 · 淡味</div>
+        <div class="ssi-jp">そうしゅ</div>
+      </div>
+      <div class="ssi-chip" data-v="醇酒">
+        <div class="ssi-name">醇酒</div>
+        <div class="ssi-desc">低香 · 浓味</div>
+        <div class="ssi-jp">じゅんしゅ</div>
+      </div>
+      <div class="ssi-chip" data-v="熟酒">
+        <div class="ssi-name">熟酒</div>
+        <div class="ssi-desc">高香 · 浓味</div>
+        <div class="ssi-jp">じゅくしゅ</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fgroup">
+    <div class="fgroup-label">特定名称推断（仅凭口感）</div>
+    <textarea id="f-grade-guess" placeholder="不看标签，你认为这是什么等级？为什么？" style="min-height:56px"></textarea>
+  </div>
+
+  <div class="fgroup">
+    <div class="fgroup-label">评分</div>
+    <div class="chips-row" id="c-rating"></div>
+  </div>
+</div>
+
+<!-- 备注 ────────────────────────────────────── -->
+<div class="card">
+  <div class="section-title">备注</div>
+
+  <div class="fgroup">
+    <div class="fgroup-label">搭配的料理</div>
+    <textarea id="f-food" placeholder="（可选）" style="min-height:48px"></textarea>
+  </div>
+  <div class="fgroup">
+    <div class="fgroup-label">背景 / 故事</div>
+    <textarea id="f-context" placeholder="在哪里喝，什么场合，有什么印象深刻的事…"></textarea>
+  </div>
+  <div class="fgroup">
+    <div class="fgroup-label">与其他酒的对比</div>
+    <textarea id="f-compare" placeholder="（可选）" style="min-height:48px"></textarea>
+  </div>
+  <div class="fgroup">
+    <div class="fgroup-label">一句话总结</div>
+    <textarea id="f-summary" placeholder="用自己的话总结这款酒，一句话。" style="min-height:56px"></textarea>
+  </div>
+</div>
+
+<!-- Actions -->
+<div class="actions">
+  <button class="btn btn-secondary" onclick="resetForm()">清空</button>
+  <button class="btn btn-primary" onclick="showExport()">导出 Markdown</button>
+</div>
+
+<!-- Export Modal -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal-box">
+    <div class="modal-title">导出 Markdown</div>
+    <pre id="export-content"></pre>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="copy-btn" onclick="copyMd()">复制</button>
+      <button class="btn btn-secondary" onclick="closeModal()">关闭</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Chip definitions ──────────────────────────────────────────────────────────
+
+const DEFS = [
+  // id, mode (s=single, m=multi), [ [display, japanese?], … ]
+  ['c-grade', 's', [
+    ['纯米大吟酿','純米大吟醸'],['大吟酿','大吟醸'],['纯米吟酿','純米吟醸'],
+    ['吟酿','吟醸'],['特别纯米','特別純米'],['纯米','純米'],
+    ['特别本酿造','特別本醸造'],['本酿造','本醸造'],
+  ]],
+  ['c-yeast', 's', [
+    ['速醸','速醸'],['生酛','生酛'],['山廃','山廃'],['不明',null],
+  ]],
+  ['c-features', 'm', [
+    ['生酒','生酒'],['原酒','原酒'],['无过滤','無濾過'],['浊酒','にごり'],['古酒','古酒'],
+  ]],
+  ['c-temp', 's', [
+    ['冷酒','冷酒'],['常温','常温'],['燗酒','燗酒'],
+  ]],
+  ['c-clarity', 's', [
+    ['晶莹透澈','透明感がある'],['略有浑浊','やや霞んだ'],['明显浑浊','濁った'],
+  ]],
+  ['c-color', 's', [
+    ['水晶白','クリスタル'],['银白','シルバー'],['金黄','ゴールド'],
+    ['淡黄','イエロー'],['黄玉色','トパーズ'],['橙色','オレンジ'],['棕褐','ブラウン'],
+  ]],
+  ['c-aroma-imp', 's', [
+    ['年轻清新','若々しい'],['爽快清爽','さわやかな'],['华丽','華やかな'],
+    ['丰盈','ふくよかな'],['芳醇','芳醇な'],['沉稳','おだやかな'],['有熟成感','熟成香を感じる'],
+  ]],
+  ['c-ar-fruit', 'm', [
+    ['葡萄柚','グレープフルーツ'],['黄苹果','黄色いリンゴ'],['西洋梨','洋ナシ'],['白桃','白桃'],
+    ['香蕉','バナナ'],['哈密瓜','メロン'],['麝香葡萄','マスカット'],['荔枝','ライチ'],
+  ]],
+  ['c-ar-floral', 'm', [
+    ['忍冬花','スイカズラ'],['紫罗兰','スミレ'],['金合欢','アカシア'],
+    ['椴树花','菩提樹'],['细叶芹','セルフィーユ'],['青竹','青竹'],['新绿','新緑'],
+  ]],
+  ['c-ar-grain', 'm', [
+    ['蒸米饭','炊いた米'],['新打麻糍','つきたての餅'],['米粉','上新粉'],
+    ['汤圆','白玉団子'],['杏仁豆腐','杏仁豆腐'],['生奶油','生クリーム'],
+    ['酸奶油','サワークリーム'],['酸奶','ヨーグルト'],['发酵黄油','発酵バター'],['奶油芝士','クリームチーズ'],
+  ]],
+  ['c-ar-wood', 'm', [
+    ['桧木','ヒノキ'],['香木','香木'],['月桂叶','月桂樹の葉'],['丁香','丁子'],['肉桂','シナモン'],
+  ]],
+  ['c-ar-aged', 'm', [
+    ['红茶','紅茶'],['焦糖','カラメル'],['咖啡','コーヒー'],['酱油','醤油'],
+    ['蜂蜜','蜂蜜'],['黑巧克力','ビターチョコ'],['栗子','栗'],['杏仁','アーモンド'],
+    ['黏土','粘土'],['石灰','石灰'],['碘香','ヨード香'],
+  ]],
+  ['c-body', 's', [
+    ['轻盈','軽い'],['略轻','やや軽い'],['略重','やや強い'],['厚重','強い'],
+  ]],
+  ['c-sweet', 's', [
+    ['淡甜','弱い'],['优雅','上品な'],['圆润','まろやかな'],['丰盈','ふくよかな'],['强劲','力強い'],
+  ]],
+  ['c-acid', 's', [
+    ['爽快','爽やかな'],['柔和','優しい'],['圆润','丸みがある'],['锐利','シャープな'],['强劲','力強い'],
+  ]],
+  ['c-bitter', 's', [
+    ['轻微','控えめな'],['增醇厚感','コクを与える'],['带鲜味','旨味をともなった'],['明显','強い'],
+  ]],
+  ['c-balance', 'm', [
+    ['顺滑','スムースな'],['活泼','溌剌とした'],['干爽','ドライな'],['圆润','まろやかな'],
+    ['黏稠','ねっとりとした'],['丰润','豊潤な'],['有厚度','厚みのある'],['强劲','力強い'],
+  ]],
+  ['c-finish', 's', [
+    ['短','短い'],['略短','やや短い'],['略长','やや長い'],['长','長い'],
+  ]],
+];
+
+const RATINGS = [
+  ['★★★', '印象深刻，会主动再找'],
+  ['★★',  '好喝，场合合适会点'],
+  ['★',   '普通或不合口味'],
+  ['—',   '仅记录信息'],
+];
+
+// ── Render ────────────────────────────────────────────────────────────────────
+
+function renderAll() {
+  DEFS.forEach(([id, mode, items]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = items.map(([label, jp]) => {
+      const jpHtml = jp && jp !== label ? `<span class="jp">${jp}</span>` : '';
+      return `<div class="chip" data-jp="${jp||label}" data-mode="${mode}" onclick="toggle(this,'${id}')">${label}${jpHtml}</div>`;
+    }).join('');
+  });
+
+  // Rating chips
+  const rc = document.getElementById('c-rating');
+  rc.innerHTML = RATINGS.map(([sym, desc]) =>
+    `<div class="rating-chip" data-v="${sym}" onclick="toggleRating(this)">${sym} <span style="font-size:12px;color:#999;font-weight:400">${desc}</span></div>`
+  ).join('');
+
+  // SSI chips click
+  document.querySelectorAll('.ssi-chip').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.ssi-chip').forEach(c => c.classList.remove('on'));
+      el.classList.add('on');
+    });
+  });
+}
+
+function toggle(el, containerId) {
+  const mode = el.dataset.mode;
+  if (mode === 's') {
+    document.querySelectorAll(`#${containerId} .chip`).forEach(c => c.classList.remove('on'));
+  }
+  el.classList.toggle('on');
+  if (mode === 's' && !el.classList.contains('on')) { /* allow deselect */ }
+}
+
+function toggleRating(el) {
+  document.querySelectorAll('#c-rating .rating-chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+}
+
+// ── Collect ───────────────────────────────────────────────────────────────────
+
+function getChips(id) {
+  return [...document.querySelectorAll(`#${id} .chip.on`)].map(c => c.dataset.jp);
+}
+function getChipLabels(id) {
+  return [...document.querySelectorAll(`#${id} .chip.on`)].map(c => c.textContent.replace(/\n.*/, '').trim());
+}
+function getSingle(id)  { return getChips(id)[0] || '—'; }
+function getMulti(id)   { return getChips(id).join('、') || '—'; }
+function getSSI()       { const e = document.querySelector('#c-ssi .ssi-chip.on'); return e ? e.dataset.v : '—'; }
+function getRating()    { const e = document.querySelector('#c-rating .rating-chip.on'); return e ? e.dataset.v : '—'; }
+function txt(id)        { return document.getElementById(id).value.trim() || '—'; }
+
+// ── Export ────────────────────────────────────────────────────────────────────
+
+function showExport() {
+  const name     = txt('f-name');
+  const brewery  = txt('f-brewery');
+  const origin   = txt('f-origin');
+  const grade    = getSingle('c-grade');
+  const seimai   = document.getElementById('f-seimaibuai').value;
+  const alc      = document.getElementById('f-alc').value;
+  const rice     = txt('f-rice');
+  const yeast    = getSingle('c-yeast');
+  const features = getMulti('c-features');
+  const date     = document.getElementById('f-date').value || '—';
+  const venue    = txt('f-venue');
+  const temp     = getSingle('c-temp');
+
+  const clarity  = getSingle('c-clarity');
+  const color    = getSingle('c-color');
+  const appNote  = txt('f-appearance-note');
+
+  const arImp    = getSingle('c-aroma-imp');
+  const arAll    = [
+    ...getChips('c-ar-fruit'), ...getChips('c-ar-floral'),
+    ...getChips('c-ar-grain'), ...getChips('c-ar-wood'), ...getChips('c-ar-aged'),
+  ].join('、') || '—';
+  const arNote   = txt('f-aroma-note');
+
+  const body    = getSingle('c-body');
+  const sweet   = getSingle('c-sweet');
+  const acid    = getSingle('c-acid');
+  const bitter  = getSingle('c-bitter');
+  const balance = getMulti('c-balance');
+  const finish  = getSingle('c-finish');
+  const finNote = txt('f-finish-note');
+
+  const ssi        = getSSI();
+  const gradeGuess = txt('f-grade-guess');
+  const rating     = getRating();
+
+  const food    = txt('f-food');
+  const context = txt('f-context');
+  const compare = txt('f-compare');
+  const summary = txt('f-summary');
+
+  const md =
+`# ${name}
+
+## 基本信息
+
+| 项目 | 内容 |
+|------|------|
+| **酒款名** | ${name} |
+| **蔵元** | ${brewery} |
+| **产地** | ${origin} |
+| **特定名称** | ${grade} |
+| **精米步合** | ${seimai ? seimai + '%' : '—'} |
+| **酒精度** | ${alc ? alc + '%' : '—'} |
+| **使用酒米** | ${rice} |
+| **酒母** | ${yeast} |
+| **其他特征** | ${features} |
+| **品饮日期** | ${date} |
+| **品饮场所** | ${venue} |
+| **品饮温度** | ${temp} |
+
+---
+
+## 品评
+
+### 外观
+
+| 项目 | 评价 |
+|------|------|
+| 清澄度 | ${clarity} |
+| 色调 | ${color} |
+| 备注 | ${appNote} |
+
+---
+
+### 香气
+
+**第一印象**：${arImp}
+
+**香气特征**：${arAll}
+
+**描述**：${arNote}
+
+---
+
+### 味道
+
+| 维度 | 评价 |
+|------|------|
+| **重量感** | ${body} |
+| **甜感（甘み）** | ${sweet} |
+| **酸感（酸み）** | ${acid} |
+| **苦感（苦み）** | ${bitter} |
+| **平衡感（バランス）** | ${balance} |
+| **余韵** | ${finish} |
+
+**余韵特征**：${finNote}
+
+---
+
+### 综合判断
+
+**SSI 类型**：${ssi}
+
+**特定名称推断**：${gradeGuess}
+
+**评分**：${rating}
+
+---
+
+## 备注
+
+**搭配料理**：${food}
+
+**背景 / 故事**：${context}
+
+**与其他酒的对比**：${compare}
+
+---
+
+## 快速摘要
+
+> ${summary}
+`;
+
+  document.getElementById('export-content').textContent = md;
+  document.getElementById('copy-btn').textContent = '复制';
+  document.getElementById('modal').classList.add('show');
+}
+
+function copyMd() {
+  const text = document.getElementById('export-content').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '已复制 ✓';
+    setTimeout(() => btn.textContent = '复制', 1800);
+  });
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+}
+
+function resetForm() {
+  if (!confirm('清空所有内容？')) return;
+  document.querySelectorAll('input[type=text], input[type=number], input[type=date], textarea')
+    .forEach(el => el.value = '');
+  document.querySelectorAll('.chip.on, .rating-chip.on, .ssi-chip.on')
+    .forEach(el => el.classList.remove('on'));
+}
+
+// Init
+renderAll();
+</script>
+</body>
+</html>
