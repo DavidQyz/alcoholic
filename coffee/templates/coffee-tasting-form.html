@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>咖啡品鉴记录</title>
+<style>
+@page { size: A4; margin: 11mm 13mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'PingFang SC','Hiragino Sans','Microsoft YaHei',sans-serif;
+  font-size: 8pt;
+  color: #000;
+  line-height: 1.35;
+}
+
+h1 {
+  font-size: 12pt;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: .12em;
+  margin-bottom: 1.5mm;
+}
+.subtitle {
+  text-align: center;
+  font-size: 6.5pt;
+  color: #555;
+  margin-bottom: 2.5mm;
+  font-style: italic;
+}
+
+.sec {
+  border: .5px solid #666;
+  margin-bottom: 1.8mm;
+  page-break-inside: avoid;
+}
+.sec-title {
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 7pt;
+  font-weight: 700;
+  padding: .8mm 2mm;
+  letter-spacing: .1em;
+}
+.sec-body { padding: 1.2mm 2mm; }
+
+.row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: .3mm 2.5mm;
+  margin-bottom: 1.1mm;
+}
+.row:last-child { margin-bottom: 0; }
+
+.lbl {
+  font-size: 7.5pt;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #111;
+}
+
+.ln       { border-bottom: .5px solid #888; height: 3.8mm; display: inline-block; }
+.ln-s     { width: 14mm; }
+.ln-m     { width: 26mm; }
+.ln-l     { flex: 1; min-width: 28mm; }
+.ln-full  { width: 100%; }
+
+.opts { display: flex; flex-wrap: wrap; gap: .3mm 2.2mm; align-items: center; }
+.opt  { display: flex; align-items: center; gap: .6mm; white-space: nowrap; font-size: 7.5pt; }
+.cb   { display: inline-block; width: 2.6mm; height: 2.6mm; border: .5px solid #444; flex-shrink: 0; }
+.rb   { display: inline-block; width: 2.6mm; height: 2.6mm; border: .5px solid #444; border-radius: 50%; flex-shrink: 0; }
+
+.ar-row  { display: flex; align-items: flex-start; gap: 1mm; margin-bottom: .7mm; }
+.ar-lbl  { font-size: 6.5pt; color: #444; min-width: 12mm; padding-top: .4mm; white-space: nowrap; }
+.ar-opts { display: flex; flex-wrap: wrap; gap: .2mm 2mm; }
+
+.taste-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .5mm 4mm;
+}
+.t-row { display: flex; align-items: center; flex-wrap: wrap; gap: .3mm 2mm; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8mm; }
+
+.nl { border-bottom: .5px solid #aaa; height: 4.5mm; margin-bottom: .7mm; }
+
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<h1>咖啡品鉴记录 · Coffee Tasting Notes</h1>
+<div class="subtitle">圆圈 ○ = 单选　方框 □ = 多选</div>
+
+<!-- 基本信息 -->
+<div class="sec">
+  <div class="sec-title">基本信息</div>
+  <div class="sec-body">
+    <div class="row">
+      <span class="lbl">国家</span><span class="ln ln-m"></span>
+      <span class="lbl">产区</span><span class="ln ln-m"></span>
+      <span class="lbl">庄园 / 合作社</span><span class="ln ln-l"></span>
+    </div>
+    <div class="row">
+      <span class="lbl">品种</span><span class="ln ln-m"></span>
+      <span class="lbl">烘焙商</span><span class="ln ln-m"></span>
+      <span class="lbl">品鉴场所</span><span class="ln ln-l"></span>
+    </div>
+    <div class="row">
+      <span class="lbl">处理法</span>
+      <div class="opts">
+        <span class="opt"><span class="rb"></span>水洗</span>
+        <span class="opt"><span class="rb"></span>日晒</span>
+        <span class="opt"><span class="rb"></span>蜜处理</span>
+        <span class="opt"><span class="rb"></span>厌氧</span>
+      </div>
+      <span class="lbl" style="margin-left:2mm">具体方式</span><span class="ln ln-l"></span>
+    </div>
+    <div class="row">
+      <span class="lbl">烘焙度</span>
+      <div class="opts">
+        <span class="opt"><span class="rb"></span>浅</span>
+        <span class="opt"><span class="rb"></span>中浅</span>
+        <span class="opt"><span class="rb"></span>中</span>
+        <span class="opt"><span class="rb"></span>中深</span>
+        <span class="opt"><span class="rb"></span>深</span>
+      </div>
+      <span class="lbl" style="margin-left:2mm">冲煮方式</span>
+      <div class="opts">
+        <span class="opt"><span class="rb"></span>手冲</span>
+        <span class="opt"><span class="rb"></span>意式</span>
+        <span class="opt"><span class="rb"></span>冷萃</span>
+        <span class="opt"><span class="rb"></span>杯测</span>
+        <span class="opt"><span class="rb"></span>其他</span>
+      </div>
+      <span class="lbl" style="margin-left:2mm">日期</span><span class="ln ln-m"></span>
+    </div>
+  </div>
+</div>
+
+<!-- 外观 + 综合判断 -->
+<div class="two-col">
+  <div class="sec">
+    <div class="sec-title">外观</div>
+    <div class="sec-body">
+      <div class="row">
+        <span class="lbl">颜色</span>
+        <div class="opts">
+          <span class="opt"><span class="rb"></span>浅金黄</span>
+          <span class="opt"><span class="rb"></span>琥珀</span>
+          <span class="opt"><span class="rb"></span>深棕</span>
+          <span class="opt"><span class="rb"></span>黑褐</span>
+        </div>
+      </div>
+      <div class="row">
+        <span class="lbl">透明度</span>
+        <div class="opts">
+          <span class="opt"><span class="rb"></span>清澈</span>
+          <span class="opt"><span class="rb"></span>略浑浊</span>
+          <span class="opt"><span class="rb"></span>浑浊</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sec-title">综合判断 &amp; 评分</div>
+    <div class="sec-body">
+      <div class="row">
+        <span class="lbl">风格倾向</span>
+        <div class="opts">
+          <span class="opt"><span class="rb"></span>花香果香型</span>
+          <span class="opt"><span class="rb"></span>醇厚甜感型</span>
+          <span class="opt"><span class="rb"></span>发酵复杂型</span>
+          <span class="opt"><span class="rb"></span>坚果巧克力型</span>
+        </div>
+      </div>
+      <div class="row">
+        <span class="lbl">评分</span>
+        <div class="opts">
+          <span class="opt"><span class="rb"></span>★★★ 封神</span>
+          <span class="opt"><span class="rb"></span>★★ 好喝</span>
+          <span class="opt"><span class="rb"></span>★ 一般</span>
+          <span class="opt"><span class="rb"></span>— 仅记录</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 香气 -->
+<div class="sec">
+  <div class="sec-title">香气</div>
+  <div class="sec-body">
+    <div class="row" style="margin-bottom:1.4mm">
+      <span class="lbl">干香</span>
+      <div class="opts">
+        <span class="opt"><span class="rb"></span>轻盈花香</span>
+        <span class="opt"><span class="rb"></span>浓郁果香</span>
+        <span class="opt"><span class="rb"></span>发酵感</span>
+        <span class="opt"><span class="rb"></span>坚果甜香</span>
+        <span class="opt"><span class="rb"></span>烟熏感</span>
+        <span class="opt"><span class="rb"></span>内敛沉稳</span>
+      </div>
+    </div>
+    <div style="font-size:6.5pt;color:#666;font-style:italic;margin-bottom:.8mm">香气特征（多选）</div>
+    <div class="ar-row">
+      <span class="ar-lbl">柑橘·果酸</span>
+      <div class="ar-opts">
+        <span class="opt"><span class="cb"></span>柠檬</span>
+        <span class="opt"><span class="cb"></span>葡萄柚</span>
+        <span class="opt"><span class="cb"></span>橙子</span>
+        <span class="opt"><span class="cb"></span>青柠</span>
+        <span class="opt"><span class="cb"></span>苹果</span>
+        <span class="opt"><span class="cb"></span>梨</span>
+      </div>
+    </div>
+    <div class="ar-row">
+      <span class="ar-lbl">浆果·热带</span>
+      <div class="ar-opts">
+        <span class="opt"><span class="cb"></span>草莓</span>
+        <span class="opt"><span class="cb"></span>覆盆子</span>
+        <span class="opt"><span class="cb"></span>蓝莓</span>
+        <span class="opt"><span class="cb"></span>桃子</span>
+        <span class="opt"><span class="cb"></span>芒果</span>
+        <span class="opt"><span class="cb"></span>百香果</span>
+        <span class="opt"><span class="cb"></span>菠萝</span>
+      </div>
+    </div>
+    <div class="ar-row">
+      <span class="ar-lbl">花香·茶</span>
+      <div class="ar-opts">
+        <span class="opt"><span class="cb"></span>茉莉</span>
+        <span class="opt"><span class="cb"></span>玫瑰</span>
+        <span class="opt"><span class="cb"></span>橙花</span>
+        <span class="opt"><span class="cb"></span>红茶</span>
+        <span class="opt"><span class="cb"></span>绿茶</span>
+        <span class="opt"><span class="cb"></span>洋甘菊</span>
+      </div>
+    </div>
+    <div class="ar-row">
+      <span class="ar-lbl">甜香·坚果</span>
+      <div class="ar-opts">
+        <span class="opt"><span class="cb"></span>焦糖</span>
+        <span class="opt"><span class="cb"></span>红糖</span>
+        <span class="opt"><span class="cb"></span>蜂蜜</span>
+        <span class="opt"><span class="cb"></span>巧克力</span>
+        <span class="opt"><span class="cb"></span>可可</span>
+        <span class="opt"><span class="cb"></span>榛子</span>
+        <span class="opt"><span class="cb"></span>杏仁</span>
+        <span class="opt"><span class="cb"></span>花生</span>
+      </div>
+    </div>
+    <div class="ar-row" style="margin-bottom:1mm">
+      <span class="ar-lbl">发酵·其他</span>
+      <div class="ar-opts">
+        <span class="opt"><span class="cb"></span>酒香</span>
+        <span class="opt"><span class="cb"></span>醋感</span>
+        <span class="opt"><span class="cb"></span>发酵浆果</span>
+        <span class="opt"><span class="cb"></span>烟草</span>
+        <span class="opt"><span class="cb"></span>雪松</span>
+        <span class="opt"><span class="cb"></span>泥土</span>
+        <span class="opt"><span class="cb"></span>香料</span>
+      </div>
+    </div>
+    <div class="row"><span class="lbl">自由描述</span><span class="ln ln-full"></span></div>
+    <div style="margin-top:.5mm"><span class="ln ln-full"></span></div>
+  </div>
+</div>
+
+<!-- 味道 -->
+<div class="sec">
+  <div class="sec-title">味道</div>
+  <div class="sec-body">
+    <div class="taste-grid">
+      <div class="t-row">
+        <span class="lbl">酸质强度</span>
+        <div class="opts">
+          <span class="opt"><span class="rb"></span>低</span>
+          <span class="opt"><span class="rb"></span>中低</span>
+          <span class="opt"><span class="rb"></span>中</span>
+          <span class="opt"><span class="rb"></span>高</span>
+          <span class="opt"><span class="rb"></span>强</span>
+        </div>
+      </div>
+      <div class="t-row">
+        <span class="lbl">酸质类型</span>
+        <div class="opts">
+          <span class="opt"><span class="rb"></span>柑橘</span>
+          <span class="opt"><span class="rb"></span>苹果</span>
+          <span class="opt"><span class="rb"></span>莓果</span>
+          <span class="opt"><span class="rb"></span>发酵酸</span>
+        </div>
+      </div>
+      <div class="t-row">
+        <span class="lbl">醇厚度</span>
+        <div class="opts">
+          <span class="opt"><span class="rb"></span>轻盈</span>
+          <span class="opt"><span class="rb"></span>中等</span>
+          <span class="opt"><span class="rb"></span>厚重</span>
+        </div>
+      </div>
+      <div class="t-row">
+        <span class="lbl">甜感</span>
+        <div class="opts">
+          <span class="opt"><span class="rb"></span>弱</span>
+          <span class="opt"><span class="rb"></span>中</span>
+          <span class="opt"><span class="rb"></span>强</span>
+        </div>
+      </div>
+      <div class="t-row" style="grid-column:1/-1">
+        <span class="lbl">口感质地</span>
+        <div class="opts">
+          <span class="opt"><span class="cb"></span>水感</span>
+          <span class="opt"><span class="cb"></span>顺滑</span>
+          <span class="opt"><span class="cb"></span>丝绒感</span>
+          <span class="opt"><span class="cb"></span>奶油感</span>
+          <span class="opt"><span class="cb"></span>糖浆感</span>
+          <span class="opt"><span class="cb"></span>涩感</span>
+          <span class="opt"><span class="cb"></span>干燥感</span>
+        </div>
+      </div>
+      <div class="t-row">
+        <span class="lbl">余韵长度</span>
+        <div class="opts">
+          <span class="opt"><span class="rb"></span>短</span>
+          <span class="opt"><span class="rb"></span>略短</span>
+          <span class="opt"><span class="rb"></span>略长</span>
+          <span class="opt"><span class="rb"></span>长</span>
+        </div>
+      </div>
+      <div class="t-row">
+        <span class="lbl">余韵描述</span><span class="ln" style="flex:1;min-width:25mm"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 备注 -->
+<div class="sec">
+  <div class="sec-title">备注</div>
+  <div class="sec-body">
+    <div class="row" style="margin-bottom:.9mm">
+      <span class="lbl">搭配食物</span><span class="ln ln-l"></span>
+      <span class="lbl" style="margin-left:3mm">场景故事</span><span class="ln ln-l"></span>
+    </div>
+    <div class="row"><span class="lbl">一句话总结</span><span class="ln ln-full"></span></div>
+    <div style="margin-top:.5mm"><span class="ln ln-full"></span></div>
+  </div>
+</div>
+
+</body>
+</html>
