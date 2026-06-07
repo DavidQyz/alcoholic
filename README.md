@@ -9,7 +9,7 @@
 ## 当前进度
 
 - [x] 清酒（日本酒）— 体系建立中，首批记录来自东京探访
-- [ ] 葡萄酒
+- [x] 葡萄酒 — 体系建立中，首批记录来自斯洛文尼亚 & 意大利北部（11款）
 - [ ] 威士忌
 - [ ] 鸡尾酒探店
 
@@ -18,18 +18,21 @@
 ## 目录结构
 
 ```
-records/
-  sake/         # 清酒品鉴记录（按酒款）
-  wine/         # 葡萄酒品鉴记录
-  whisky/       # 威士忌品鉴记录
-  cocktail/     # 鸡尾酒探店记录
-docs/
-  sake-primer.md       # 清酒基础知识与分类体系
-  wine-primer.md       # 葡萄酒基础知识（待建）
-  whisky-primer.md     # 威士忌基础知识（待建）
-  tasting-templates/   # 各类酒的品评模板
-  venues.md            # 探访过的酒吧/酒厂列表
-CLAUDE.md              # 给Claude的项目记忆文件
+sake/
+  records/      # 清酒品鉴记录（按县/蔵元）
+  brewing/      # 酿造知识笔记
+  templates/    # 品评模板
+  sake-primer.md
+wine/
+  records/      # 葡萄酒品鉴记录（按产国/产区）
+  varieties/    # 品种库（白葡萄/红葡萄）
+  study/        # WSET3 教材学习笔记（11章）
+  templates/    # 品评模板
+  wine-primer.md
+  WSET3-*.pdf/xlsx/docx  # 教材原文
+coffee/
+  templates/    # 咖啡品鉴模板（md / xlsx / pdf）
+CLAUDE.md       # 给Claude的项目记忆文件
 ```
 
 ---
@@ -61,8 +64,8 @@ YYYY-MM-DD_酒厂名_酒款名.md
 
 ## 品评语言参考
 
-- 清酒：参见 `docs/sake-primer.md`（基于SAKE DIPLOMA / SSI唎酒師体系）
-- 葡萄酒：待建（基于WSET体系）
+- 清酒：参见 `sake/sake-primer.md`（基于SAKE DIPLOMA / SSI唎酒師体系）
+- 葡萄酒：参见 `wine/wine-primer.md`（基于WSET Level 3 SAT体系）
 - 威士忌：待建
 
 ---
@@ -71,3 +74,4 @@ YYYY-MM-DD_酒厂名_酒款名.md
 
 - 2025-06 东京四日（个人行）— 澤乃井酒造见学、和幻十四代飲み比べ、原価酒蔵新政の日
 - 2025-06 东京四日（家庭行）— 石川酒造见学、原価酒蔵
+- 2025 斯洛文尼亚 & 意大利北部 — 橙酒、Brda 自然酒、Barolo 初探（11款）
