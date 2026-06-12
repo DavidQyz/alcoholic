@@ -8,8 +8,9 @@
 
 ## 当前进度
 
-- [x] 清酒（日本酒）— 体系建立中，首批记录来自东京探访
-- [ ] 葡萄酒
+- [x] 清酒（日本酒）— 体系已建立，17条品饮记录（2025-08 大阪·京都·和歌山行），东京行程记录待补
+- [x] 咖啡 — 品鉴表单与产区概览已建（非酒类的附加品类）
+- [ ] 葡萄酒 — 体系搭建中（WSET Level 3 方向，品种卡片已建）
 - [ ] 威士忌
 - [ ] 鸡尾酒探店
 
@@ -18,31 +19,40 @@
 ## 目录结构
 
 ```
-records/
-  sake/         # 清酒品鉴记录（按酒款）
-  wine/         # 葡萄酒品鉴记录
-  whisky/       # 威士忌品鉴记录
-  cocktail/     # 鸡尾酒探店记录
-docs/
+sake/
   sake-primer.md       # 清酒基础知识与分类体系
-  wine-primer.md       # 葡萄酒基础知识（待建）
-  whisky-primer.md     # 威士忌基础知识（待建）
-  tasting-templates/   # 各类酒的品评模板
+  brewing/             # 酿造工艺笔记（01原料処理 ~ 06後処理）
+  brewing-moto.md      # 酒母专题
+  regional-impressions.md  # 产地印象
   venues.md            # 探访过的酒吧/酒厂列表
-CLAUDE.md              # 给Claude的项目记忆文件
+  templates/           # 清酒品评模板
+  records/             # 品鉴记录，按 都道府県/蔵元/ 组织
+wine/
+  wine-primer.md       # 葡萄酒基础知识（WSET Level 3 方向）
+  varieties/           # 品种卡片（red/ + white/）
+  templates/           # 品评模板、产区概览模板
+coffee/
+  templates/           # 咖啡品鉴表单（md/html/pdf/xlsx）与产区概览
+docs/
+  tasting-templates/   # 鸡尾酒探店模板等
+  *.py / *-form.*      # 品鉴表单生成脚本与产物
+project_management/
+  WORKLOG.md           # 工作日志（AgentOS 会话连续性）
+  agentos_lesson_candidates.md  # 可泛化工作流经验候选
+CLAUDE.md              # 给Claude的项目记忆文件（顶层规则）
 ```
 
 ---
 
 ## 品评记录格式
 
-每个 `records/` 子目录下，每款酒一个 `.md` 文件，文件名格式：
+每款酒一个 `.md` 文件，放在 `sake/records/都道府県/蔵元名/` 下，文件名格式：
 
 ```
-YYYY-MM-DD_酒厂名_酒款名.md
+评分_YYYY-MM_蔵元名_酒款名.md
 ```
 
-例：`2025-06-25_高木酒造_十四代-龍の落とし子.md`
+例：`★★★_2025-08_吉村秀雄商店_車坂-山廃.md`（日期精确到日时用 `YYYY-MM-DD`；蔵元文件夹内可另建 `蔵元紹介.md`）
 
 ---
 
@@ -61,8 +71,8 @@ YYYY-MM-DD_酒厂名_酒款名.md
 
 ## 品评语言参考
 
-- 清酒：参见 `docs/sake-primer.md`（基于SAKE DIPLOMA / SSI唎酒師体系）
-- 葡萄酒：待建（基于WSET体系）
+- 清酒：参见 `sake/sake-primer.md`（基于SAKE DIPLOMA / SSI唎酒師体系）
+- 葡萄酒：参见 `wine/wine-primer.md` 与 `wine/varieties/`（基于WSET Level 3体系）
 - 威士忌：待建
 
 ---
