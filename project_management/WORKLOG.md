@@ -8,6 +8,16 @@ primer、模板），不要在这里重复细节。
 
 ---
 
+## 2026-06-13 — 建立威士忌品类（空架子，以记录为主）
+
+- 威士忌定位为**记录为主、轻品评**：用户未系统学过威士忌品饮，靠多喝 +
+  套用其他饮料风味框架，不建固定词表体系。
+- 目录按 `whisky/records/产国/产区/酒厂/` 三级；命名 `评分_YYYY_酒厂_酒款名.md`。
+- 新建：`whisky/whisky-primer.md`（产区/类型对照参考）、
+  `whisky/templates/whisky-tasting.md`（轻品评模板）、
+  `whisky/templates/产区概览.md`、`whisky/records/README.md`（结构说明，暂空）。
+- 同步进 README 与 CLAUDE.md；CLAUDE.md 待办"探讨威士忌分类体系"标记完成。
+
 ## 2026-06-13 — 合并远端葡萄酒记录，解决 README 冲突
 
 - 远端 7 个新提交并入本地：19 个葡萄酒文件（斯洛文尼亚 6 产区 + 意大利 3 产区，

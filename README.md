@@ -11,7 +11,7 @@
 - [x] 清酒（日本酒）— 体系已建立，17条品饮记录（2025-08 大阪·京都·和歌山行），东京行程记录待补
 - [x] 葡萄酒 — 体系建立中（WSET Level 3 方向），首批记录来自斯洛文尼亚 & 意大利北部（11款）
 - [x] 咖啡 — 品鉴表单与产区概览已建（非酒类的附加品类）
-- [ ] 威士忌
+- [~] 威士忌 — 架子已建，**以记录为主**（轻品评，无系统品饮体系）
 - [ ] 鸡尾酒探店
 
 ---
@@ -34,6 +34,10 @@ wine/
   templates/           # 品评模板、产区概览模板
   records/             # 葡萄酒品鉴记录，按 产国/产区/ 组织（含产区概览）
   WSET3-*.pdf/xlsx/docx  # 教材原文
+whisky/
+  whisky-primer.md     # 产区/类型对照（以记录为主，轻参考）
+  templates/           # 轻品评模板、产区概览模板
+  records/             # 威士忌记录，按 产国/产区/酒厂 组织
 coffee/
   templates/           # 咖啡品鉴表单（md/html/pdf/xlsx）与产区概览
 docs/
@@ -57,6 +61,9 @@ CLAUDE.md              # 给Claude的项目记忆文件（顶层规则）
 - **葡萄酒**：放在 `wine/records/产国/产区/` 下，文件名 `类型-YYYY-酒庄-酒款名.md`
   （类型：红 / 白 / 橙 / 白浸皮等；每个产区另建 `产区概览.md`）
   例：`红-2025-Ausonia-Montepulciano.md`
+- **威士忌**：放在 `whisky/records/产国/产区/酒厂/` 下，文件名 `评分_YYYY_酒厂_酒款名.md`
+  （以记录为主、轻品评；产区概念弱的产国中间一级可用产国名占位）
+  例：`★★★_2018_Lagavulin_16年.md`
 
 ---
 
@@ -77,7 +84,7 @@ CLAUDE.md              # 给Claude的项目记忆文件（顶层规则）
 
 - 清酒：参见 `sake/sake-primer.md`（基于SAKE DIPLOMA / SSI唎酒師体系）
 - 葡萄酒：参见 `wine/wine-primer.md`、`wine/varieties/` 与 `wine/study/`（基于WSET Level 3 SAT体系）
-- 威士忌：待建
+- 威士忌：参见 `whisky/whisky-primer.md`（产区/类型对照，以记录为主，无系统品评体系）
 
 ---
 
